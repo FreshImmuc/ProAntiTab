@@ -120,7 +120,11 @@ public class PermissionUtil {
     }
 
     public static boolean hasPermission(final Object targetObj, final String permission, final boolean isOperator) {
-        if (isOperator) return true;
+        return hasPermission(targetObj, permission, isOperator, true);
+    }
+
+    private static boolean hasPermission(final Object targetObj, final String permission, final boolean isOperator, final boolean allowWildcards) {
+        if (isOperator && Storage.ConfigSections.Settings.BYPASS_HANDLING.OPERATORS) return true;
 
 
         PermissionMap permissionMap;
@@ -151,8 +155,7 @@ public class PermissionUtil {
                 return true;
             }
 
-            return sender.hasPermission("*")
-                    || sender.hasPermission("proantitab.*")
+            return (allowWildcards && (sender.hasPermission("*") || sender.hasPermission("proantitab.*")))
                     || sender.hasPermission("proantitab." + permission);
         }
 
@@ -186,8 +189,7 @@ public class PermissionUtil {
             }
         }
 
-        return permissionMap.isPermitted("*")
-                || permissionMap.isPermitted("proantitab.*")
+        return (allowWildcards && (permissionMap.isPermitted("*") || permissionMap.isPermitted("proantitab.*")))
                 || permissionMap.isPermitted("proantitab." + permission);
     }
 
@@ -197,7 +199,7 @@ public class PermissionUtil {
             return false;
         }
 
-        return hasPermission(targetObj, "bypass", isOperator);
+        return hasPermission(targetObj, "bypass", isOperator, Storage.ConfigSections.Settings.BYPASS_HANDLING.WILDCARDS);
     }
 
     public static boolean hasBypassPermission(
@@ -218,7 +220,7 @@ public class PermissionUtil {
             return false;
         }
 
-        return hasPermission(targetObj, "bypass." + command, isOperator);
+        return hasPermission(targetObj, "bypass." + command, isOperator, Storage.ConfigSections.Settings.BYPASS_HANDLING.WILDCARDS);
     }
 
     public static boolean hasPermissionWithResponse(

@@ -31,6 +31,7 @@ import de.rayzs.pat.utils.sender.CommandSender;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.rayzs.pat.api.storage.Storage;
 import de.rayzs.pat.utils.scheduler.*;
@@ -177,9 +178,13 @@ public class BukkitLoader extends JavaPlugin implements PluginLoader {
     public void addPermission(String permission) {
         permission = "proantitab." + permission;
 
+        final PermissionDefault permissionDefault = Storage.ConfigSections.Settings.BYPASS_HANDLING.OPERATORS
+                ? PermissionDefault.OP
+                : PermissionDefault.FALSE;
+
         final PluginManager manager = getServer().getPluginManager();
         if (manager.getPermission(permission) == null) {
-            manager.addPermission(new Permission(permission));
+            manager.addPermission(new Permission(permission, permissionDefault));
         }
     }
 

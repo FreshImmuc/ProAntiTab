@@ -274,6 +274,10 @@ public class BukkitPacketAnalyzer {
                 return true;
             }
 
+            if (!Storage.ConfigSections.Settings.BYPASS_HANDLING.OPERATORS) {
+                return false;
+            }
+
             if (System.currentTimeMillis() - this.lastCheckedForOperatorPermission >= 2000) {
                 this.lastCheckedForOperatorPermission = System.currentTimeMillis();
                 this.operatorStatus = player.isOp();

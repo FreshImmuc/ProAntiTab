@@ -35,7 +35,7 @@ public class BukkitAntiTabListener implements Listener {
         final UUID uuid = player.getUniqueId();
         final boolean isOperator = player.isOp();
 
-        if (player.isOp()) {
+        if (player.isOp() && Storage.ConfigSections.Settings.BYPASS_HANDLING.OPERATORS) {
             if (!knownOperators.contains(uuid)) {
                 knownOperators.add(uuid);
             }

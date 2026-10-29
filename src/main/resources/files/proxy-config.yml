@@ -39,6 +39,12 @@ disable-sync: false
 # Enabling this will disable ALL commands except for those that are in the (group-)list.
 turn-blacklist-to-whitelist: true
 
+# Grants bypass even without the "proantitab.bypass" permission
+# operators: server operators (requires restart, no effect on proxies), wildcards: '*' or 'proantitab.*'
+bypass-handling:
+  operators: true
+  wildcards: true
+
 # This decides whether PAT ignores or detects whether a command is written in upper/-lower cased letters.
 # Here are a few examples if this option is enabled:
 # Example with allowing the command "HelP"
@@ -275,6 +281,10 @@ custom-server-brand:
 # Here are all the remaining messages for the InGame commands.
 # Have fun editing them to your liking! ^^
 # Remember: PlaceholderAPI & MiniMessage works on all these messages! ^^
+# 
+# Every "message" is a list of individual messages
+# use <newline> to create a new line within one message
+#
 # Here are a few other placeholders that can be used in any message here:
 # %prefix%            - the plugin prefix
 # %executor%          - the name of the executor (command specified)

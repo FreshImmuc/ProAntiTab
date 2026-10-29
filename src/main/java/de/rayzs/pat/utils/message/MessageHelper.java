@@ -39,13 +39,21 @@ public class MessageHelper {
     }
 
     public static void sendMessage(CommandSender sender, List<String> texts, String... replacements) {
-        sendMessage(sender, StringUtils.getStringList(texts, "\n"), replacements);
+        
+        if (texts.stream().allMatch(String::isEmpty)) return;
+
+        for (String text : texts) {
+            send(sender, text, replacements);
+        }
     }
 
     public static void sendMessage(CommandSender sender, String text, String... replacements) {
         if (text.isEmpty()) return;
 
+        send(sender, text, replacements);
+    }
 
+    private static void send(CommandSender sender, String text, String... replacements) {
         if (!Reflection.isProxyServer()) {
             text = PlaceholderReplacer.applyPlaceholders(sender, text, replacements);
 
