@@ -360,6 +360,7 @@ public class Storage {
             public static final UpdateGroupsPerWorldSection UPDATE_GROUPS_PER_WORLD = new UpdateGroupsPerWorldSection();
             public static final UpdateGroupsPerServerSection UPDATE_GROUPS_PER_SERVER = new UpdateGroupsPerServerSection();
             public static final BypassHandlingSection BYPASS_HANDLING = new BypassHandlingSection();
+            public static final BlurBlockedCommandsSection BLUR_BLOCKED_COMMANDS = new BlurBlockedCommandsSection();
 
             public static UpdateSection UPDATE = new UpdateSection();
 

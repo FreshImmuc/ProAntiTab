@@ -25,6 +25,9 @@ import de.rayzs.pat.utils.permission.PermissionUtil;
 
 public class BukkitBlockCommandListener implements Listener {
 
+    private PlayerCommandPreprocessEvent blockedEvent, blurredEvent;
+    private String blurredMessage;
+
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onUnknownCommandRecognition(PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
@@ -113,7 +116,7 @@ public class BukkitBlockCommandListener implements Listener {
                 }
             });
 
-            event.setCancelled(true);
+            block(event);
             return;
         }
 
@@ -135,7 +138,7 @@ public class BukkitBlockCommandListener implements Listener {
                 }
             });
 
-            event.setCancelled(true);
+            block(event);
             return;
         }
 
@@ -166,7 +169,7 @@ public class BukkitBlockCommandListener implements Listener {
             );
 
             if (executeCommandEvent.isBlocked()) {
-                event.setCancelled(true);
+                block(event);
 
 
                 MessageHelper.sendMessage(
@@ -205,7 +208,7 @@ public class BukkitBlockCommandListener implements Listener {
         );
 
         if (executeCommandEvent.isBlocked()) {
-            event.setCancelled(true);
+            block(event);
 
             MessageHelper.sendMessage(
                     sender,
@@ -222,5 +225,31 @@ public class BukkitBlockCommandListener implements Listener {
                     )
             );
         }
+    }
+
+    @EventHandler (priority = EventPriority.LOW)
+    public void onBlockedCommandBlur(PlayerCommandPreprocessEvent event) {
+        if (blockedEvent != event) return;
+        blockedEvent = null;
+
+        if (!event.isCancelled() || !Storage.ConfigSections.Settings.BLUR_BLOCKED_COMMANDS.ENABLED) return;
+
+        blurredEvent = event;
+        blurredMessage = event.getMessage();
+        event.setMessage("/");
+    }
+
+    @EventHandler (priority = EventPriority.MONITOR)
+    public void onBlockedCommandRestore(PlayerCommandPreprocessEvent event) {
+        if (blurredEvent != event) return;
+
+        event.setMessage(blurredMessage);
+        blurredEvent = null;
+        blurredMessage = null;
+    }
+
+    private void block(PlayerCommandPreprocessEvent event) {
+        event.setCancelled(true);
+        blockedEvent = event;
     }
 }
