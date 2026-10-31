@@ -361,6 +361,7 @@ public class Storage {
             public static final UpdateGroupsPerServerSection UPDATE_GROUPS_PER_SERVER = new UpdateGroupsPerServerSection();
             public static final BypassHandlingSection BYPASS_HANDLING = new BypassHandlingSection();
             public static final BlurBlockedCommandsSection BLUR_BLOCKED_COMMANDS = new BlurBlockedCommandsSection();
+            public static final ConsoleCommandWhitelistSection CONSOLE_COMMAND_WHITELIST = new ConsoleCommandWhitelistSection();
 
             public static UpdateSection UPDATE = new UpdateSection();
 

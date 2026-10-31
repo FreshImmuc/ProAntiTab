@@ -112,6 +112,7 @@ public class BukkitLoader extends JavaPlugin implements PluginLoader {
 
         manager.registerEvents(new BukkitPlayerListener(), this);
         manager.registerEvents(new BukkitBlockCommandListener(), this);
+        manager.registerEvents(new BukkitConsoleCommandListener(), this);
 
         if (Reflection.isAtLeast(1, 13)) {
             bukkitAntiTabListener = new BukkitAntiTabListener();
